@@ -3,7 +3,7 @@
 !!!add Castling
 -"Checkmate" function
 !!!abort for piece selection
--Pawn promotion
+!!!Pawn promotion
 
 """
 pieceDict = {11 : "wr1", 12 : "wp", 13 : "no", 14: "no", 15 : "no", 16 : "no", 17 : "bp", 18 : "br1",
@@ -15,6 +15,26 @@ pieceDict = {11 : "wr1", 12 : "wp", 13 : "no", 14: "no", 15 : "no", 16 : "no", 1
             71 : "wn", 72 : "wp", 73 : "no", 74 : "no", 75 : "no", 76 : "no", 77 : "bp", 78 : "bn",
             81 : "wr1", 82 : "wp", 83 : "no", 84 : "no", 85 : "no", 86 : "no", 87 : "bp", 88 : "br1",
             99: "1"}
+
+def promote():
+    for i in [18, 28, 38, 48, 58, 68, 78, 88]:
+        if pieceDict[i] == "wd":
+            newPiece = "string"
+            while newPiece not in ["q", "n", "r", "b"]:
+                newPiece = input("What piece would you like to promote your pawn to? Type \"q\" for queen, \"k\" for knight, \"r\" for rook, and \"b\" for bishop.").replace("k", "n")
+            if newPiece not in ["q", "n", "r", "b"]:
+                print("That is not one of the options.")
+                continue
+            pieceDict[i] = "w"+newPiece
+    for i in [11, 21, 31, 41, 51, 61, 71, 81]:
+        if pieceDict[i] == "bd":
+            newPiece = "string"
+            while newPiece not in ["q", "n", "r", "b"]:
+                newPiece = input("What piece would you like to promote your pawn to? Type \"q\" for queen, \"k\" for knight, \"r\" for rook, and \"b\" for bishop.").replace("k", "n")
+            if newPiece not in ["q", "n", "r", "b"]:
+                print("That is not one of the options.")
+                continue
+            pieceDict[i] = "b"+newPiece    
 
 def saveFile(file):
     f = open(file, "w")
@@ -417,6 +437,8 @@ additional commands:
     while checkmate == 0:
         player = int(pieceDict[99])
         move(str(player).replace("-1", "b").replace("1", "w"))
+        printBoard()
+        promote()
         printBoard()
         if check(str(player).replace("-1", "w").replace("1", "b"), pieceDict):
             print("Check on " +str(player).replace("-1", "white").replace("1", "black")+ "!")
